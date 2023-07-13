@@ -239,13 +239,8 @@ form .buttons button , .backBtn{
 
                     <div class="fields">
                         <div class="input-field">
-                            <label>Address Type</label>
-                            <input type="text" name="addresstype" placeholder="Permanent or Temporary" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>City</label>
-                            <input type="text" name="city" placeholder="Enter your city" required>
+                            <label>Locality</label>
+                            <input type="text" name="local" placeholder="e.g. Ghatkopar" required>
                         </div>
 
                         <div class="input-field">
@@ -297,8 +292,7 @@ if(isset($_POST["sub"])){
         $phone = $_POST['phone'];
         $gender = $_POST['gender'];
         $bloodgroup = $_POST['bloodgroup'];
-        $addresstype = $_POST['addresstype'];
-        $city = $_POST['city'];
+        $local = $_POST['local'];
         $pincode = $_POST['pincode'];
         $password = $_POST['password'];
         if($_POST['isdonor'] == NULL){
@@ -308,8 +302,8 @@ if(isset($_POST["sub"])){
             $isdonor = $_POST['isdonor'];
         }
 
-        $stmt = $conn->prepare("INSERT INTO mp_login(name, dob, email, mobileno, gender, bloodgroup, address, city, pincode, password, isdonor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssssssi", $fullname, $birthdate, $email, $phone, $gender, $bloodgroup, $addresstype, $city, $pincode, $password, $isdonor);
+        $stmt = $conn->prepare("INSERT INTO login(name, dob, email, mobileno, gender, bloodgroup, local, pincode, password, isdonor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssssi", $fullname, $birthdate, $email, $phone, $gender, $bloodgroup, $local, $pincode, $password, $isdonor);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {

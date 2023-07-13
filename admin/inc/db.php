@@ -1,6 +1,6 @@
 <?php
 
-$conn=mysqli_connect("bloodbond.cy1tpuc1yvet.us-west-1.rds.amazonaws.com","admin","Bloodbond123","login");
+$conn=mysqli_connect("bloodbond.cy1tpuc1yvet.us-west-1.rds.amazonaws.com","admin","Bloodbond123","bloodbond");
 
 // if($conn){
 //     echo "connection successfull";
