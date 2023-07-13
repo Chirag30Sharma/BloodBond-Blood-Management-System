@@ -1,7 +1,7 @@
 <?php
-$conn=mysqli_connect("sql12.freemysqlhosting.net","sql12593294","ytEMRP8PnK","sql12593294");
+$conn=mysqli_connect("bloodbond.cy1tpuc1yvet.us-west-1.rds.amazonaws.com","admin","Bloodbond123","login");
 
-// if($con){
+// if($conn){
 //     echo "connection successfull";
 // }else{
 //     echo "connection error".mysqli_connect_error();
