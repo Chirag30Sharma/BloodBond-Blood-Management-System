@@ -282,44 +282,46 @@ form .buttons button , .backBtn{
     </div>
 <?php
 include("db.php");
+include("validation.php");
 
-if(isset($_POST["sub"])){
-    if($_POST['password'] == $_POST['password2']){
+if (isset($_POST["sub"])) {
+    if ($_POST['password'] == $_POST['password2']) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $fullname = $_POST['fullname'];
-        $birthdate = $_POST['birthdate'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $gender = $_POST['gender'];
-        $bloodgroup = $_POST['bloodgroup'];
-        $local = $_POST['local'];
-        $pincode = $_POST['pincode'];
-        $password = $_POST['password'];
-        if($_POST['isdonor'] == NULL){
-            $isdonor = 0;
-        }
-        else{
-            $isdonor = $_POST['isdonor'];
-        }
+            $fullname = $_POST['fullname'];
+            $birthdate = $_POST['birthdate'];
+            $email = $_POST['email'];
+            $phone = $_POST['phone'];
+            $gender = $_POST['gender'];
+            $bloodgroup = $_POST['bloodgroup'];
+            $local = $_POST['local'];
+            $pincode = $_POST['pincode'];
+            $password = $_POST['password'];
 
-        $stmt = $conn->prepare("INSERT INTO login(name, dob, email, mobileno, gender, bloodgroup, local, pincode, password, isdonor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssssi", $fullname, $birthdate, $email, $phone, $gender, $bloodgroup, $local, $pincode, $password, $isdonor);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            echo "Registration successful!";
-            if($isdonor == 1){
-                echo "<script>window.location = 'donor.php';</script>";
+            // Validation
+            if (!checkemail($email) || !checkDOB($birthdate) || !checkPhoneNumber($phone) || !checkPincode($pincode) || !checkPassword($password)) {
+                // One or more fields are invalid, do not proceed further
+                return;
             }
-            else{
-            echo "<script>window.location = 'login.php';</script>";
+
+            $isdonor = isset($_POST['isdonor']) ? 1 : 0;
+
+            $stmt = $conn->prepare("INSERT INTO login(name, dob, email, mobileno, gender, bloodgroup, locality, pincode, password, isdonor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssssi", $fullname, $birthdate, $email, $phone, $gender, $bloodgroup, $local, $pincode, $password, $isdonor);
+            $stmt->execute();
+
+            if ($stmt->affected_rows > 0) {
+                echo "Registration successful!";
+                if ($isdonor == 1) {
+                    echo "<script>window.location = 'donor.php';</script>";
+                } else {
+                    echo "<script>window.location = 'login.php';</script>";
+                }
+            } else {
+                echo "Error occurred during registration.";
             }
         }
-
-        }
-    }
-    else{
-        echo 'Password Not Match! Please try again!';
+    } else {
+        echo 'Password does not match! Please try again!';
     }
 }
 ?>
