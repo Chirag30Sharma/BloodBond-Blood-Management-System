@@ -186,18 +186,13 @@ form .buttons button , .backBtn{
         <form action="asignup.php" method = "POST">
             <div class="form first">
                 <div class="details personal">
-                    <span class="title">Personal Details</span>
+                    <span class="title"></span>
 
                     <div class="fields">
 
                         <div class="input-field">
-                            <label>Hospital Name</label>
-                            <input type="text" name="hname" placeholder="Enter the Hospital Name" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Email</label>
-                            <input type="email" name="email" placeholder="Enter your email" required>
+                            <label>Name of Organisation</label>
+                            <input type="text" name="orgname" placeholder="Enter Organisation Name" required>
                         </div>
 
                         <div class="input-field">
@@ -206,14 +201,46 @@ form .buttons button , .backBtn{
                         </div>
 
                         <div class="input-field">
-                            <label>Phone Number</label>
+                            <label>Contact Number</label>
                             <input type="text" name="phone" placeholder="Enter your phone" required>
                         </div>
 
                         <div class="input-field">
-                            <label>Password</label>
-                            <input type="password" name="pass" placeholder="Enter your password" required>
+                            <label>Website</label>
+                            <input type="text" name="weburl" placeholder="Enter your website url" required>
                         </div>
+
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Password</label>
+                            <input type="password" name="pass" placeholder="Create password" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confpass" placeholder="Enter password again" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Organisation</label>
+                            <select name="organisation" required>
+                                <option disabled selected>select organisation type</option>
+                                <option value="Hospital">Hospital</option>
+                                <option value="BloodBank">BloodBank</option>
+                                <option value="Clinic">Clinic</option>
+                            </select>
+
+                        </div>
+
+                        <div class="input-field">
+                            <label>License Number</label>
+                            <input type="text" name="license_num" placeholder="Enter your License Number" required>
+                        </div>
+
                     </div>
 
                     <button class="nextBtn" name = "sub">
@@ -221,22 +248,30 @@ form .buttons button , .backBtn{
                         <i class="uil uil-navigator"></i>
                     </button>
                 </div> 
+                <p class="register">Have An Admin Account? <a href="aindex.php">Sign in</a></p>
             </div>
+            
         </form>
     </div>
 <?php
 include("inc/db.php");
 
+
 if(isset($_POST["sub"])){
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $hname = $_POST['hname'];
-    $email = $_POST['email'];
+    $orgname = $_POST['orgname'];
     $add = $_POST['add'];
     $phone = $_POST['phone'];
+    $weburl = $_POST['weburl'];
+    $email = $_POST['email'];
     $pass = $_POST['pass'];
+    $organisation = $_POST['organisation'];
+    $license_num = $_POST['license_num'];
 
-    $stmt = $conn->prepare("INSERT INTO mp_admin(Hospital_name, Email, Address, Phonenum, Password) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $hname, $email, $add, $phone, $pass);
+
+
+    $stmt = $conn->prepare("INSERT INTO admin_registration(org_name, org_add, org_no, website_url,org_email,org_pass,org_type,org_license_no) VALUES (?, ?, ?, ?, ?,?,?,?)");
+    $stmt->bind_param("ssssssss", $orgname, $add, $phone,$weburl,$email,$pass, $organisation, $license_num);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {

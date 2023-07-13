@@ -1,11 +1,23 @@
 <?php
 include('inc/db.php');
 
-if(isset($_GET['email'])){
-    $email = $_GET['email'];
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: aaindex.php');
+	exit;
 }
 
-$stmt = $conn->prepare("SELECT Hospital_name, Address, Phonenum FROM mp_admin WHERE Email = ?");
+$email = $_SESSION["email"];
+$sql = "SELECT org_name FROM admin_registration WHERE org_email = '$email'";
+$result = mysqli_query($conn, $sql);
+
+if ($result && mysqli_num_rows($result) == 1) {
+    $row = mysqli_fetch_assoc($result);
+    $name = $row['org_name'];
+}
+
+$stmt = $conn->prepare("SELECT org_name, org_add, org_no FROM admin_registration WHERE org_email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 
@@ -13,9 +25,9 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        $hospital_name = $row['Hospital_name'];
-        $hospital_address = $row['Address'];
-        $hospital_num = $row['Phonenum'];
+        $organisation_name = $row['org_name'];
+        $organisation_address = $row['org_add'];
+        $organisation_num = $row['org_no'];
     }
 
 } else {
@@ -71,15 +83,15 @@ if ($result->num_rows > 0) {
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
             <a class="navbar-brand p-0">
-                <h1 class="m-0"><?php echo $hospital_name; ?></h1>
+                <h1 class="m-0"><?php echo $organisation_name; ?></h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a class="nav-item nav-link"><?php echo $hospital_address; ?></a>
-                    <a class="nav-item nav-link"><?php echo $hospital_num; ?></a>
+                    <a class="nav-item nav-link"><?php echo $organisation_address; ?></a>
+                    <a class="nav-item nav-link"><?php echo $organisation_num; ?></a>
                 </div>
             </div>
         </nav>
@@ -196,3 +208,17 @@ if ($result->num_rows > 0) {
 </body>
 
 </html>
+
+
+
+<!-- 
+echo '<div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle dropdown-hover" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'. $name .'</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="login_dashboard.php">Profile Details</a>
+                <a class="dropdown-item" href="logout.php">Logout</a>
+            </div>
+        </div>
+        </div>
+        </div>
+    </nav>'; -->

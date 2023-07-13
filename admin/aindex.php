@@ -148,7 +148,7 @@ include("inc/db.php");
       <input type="password" placeholder="Enter Password" name="pswrd" required>
 
       <!-- Submit button -->
-      <button type="submit">Login</button>
+      <button type="submit" name="log">Login</button>
 
       <!-- Sign up link -->
       <p class="register">Don't Have An Admin Account? <a href="asignup.php">Sign up</a></p>
@@ -160,23 +160,26 @@ include("inc/db.php");
 </html>
 
 <?php
+session_start(); // Start the session
+include("inc/db.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["log"])) {
   $email = $_POST["email"];
   $pswrd = $_POST["pswrd"];
 
-  $sql = "SELECT * FROM mp_admin WHERE email = '$email' AND password = '$pswrd'";
+  $sql = "SELECT * FROM admin_registration WHERE email = '$email' AND password = '$pswrd'";
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) == 1) {
-    session_start();
+    session_regenerate_id();
+		$_SESSION['loggedin'] = TRUE;
     $_SESSION["email"] = $email;
 
     header("Location: aaindex.php?email=$email");
+    exit;
   } else {
     echo "Invalid username or password";
   }
 }
-
 ?>
 
