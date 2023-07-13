@@ -143,15 +143,11 @@
       <input type="password" placeholder="Enter Password" name="pswrd" required>
 
       <div class="subcontainer">
-        <label>
-          <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
         <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>
       </div>
 
-
       <!-- Submit button -->
-      <button type="submit">Login</button>
+      <button type="submit" name="log">Login</button>
 
       <!-- Sign up link -->
       <p class="register">Don't Have An Account? <a href="signup.php">Sign up</a></p>
@@ -159,18 +155,20 @@
     </div>
   </form>
 
-  <?php
+<?php
+session_start(); // Start the session
 include("db.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["log"])) {
   $email = $_POST["email"];
   $pswrd = $_POST["pswrd"];
 
-  $sql = "SELECT * FROM mp_login WHERE email = '$email' AND password = '$pswrd'";
+  $sql = "SELECT * FROM login WHERE email = '$email' AND password = '$pswrd'";
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) == 1) {
-    session_start();
+    session_regenerate_id();
+		$_SESSION['loggedin'] = TRUE;
     $_SESSION["email"] = $email;
 
     header("Location: profile.php?email=$email");

@@ -1,5 +1,14 @@
-<?php include('mail.php'); ?>
-<?php include('db.php'); ?>
+<?php 
+
+include('db.php'); 
+include('mail.php'); 
+session_start();
+
+if (isset($_SESSION['loggedin'])) {
+	header('Location: profile.php');
+	exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,23 +53,7 @@
 
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-            <a href="index.php" class="navbar-brand p-0">
-                <h1 class="m-0">BLOODBOND</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="index.php" class="nav-item nav-link active">Home</a>
-                    <a href="livebloodcamp.php" class="nav-item nav-link">Live Blood Camps</a>
-                    <a href="donor.php" class="nav-item nav-link">Donor Registration</a>
-                    <a href="guidelines.php" class="nav-item nav-link">Guidelines</a>
-                    <a href="login.php" class="nav-item nav-link">Login</a>
-                </div>
-            </div>
-        </nav>
+        <?php include("navbar.php"); ?>
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">

@@ -1,3 +1,8 @@
+<?php
+session_start(); // Add this line to initialize the session
+include("db.php");
+?>
+
 <!DOCTYPE html>
 <html lang = "en">
     <head>
@@ -98,23 +103,8 @@
     <body>
         <!-- Navbar & Carousel Start -->
         <div class="container-fluid position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-                <a href="indexphp" class="navbar-brand p-0">
-                    <h1 class="m-0">BLOODBOND</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="indexphp" class="nav-item nav-link">Home</a>
-                        <a href="livebloodcampphp" class="nav-item nav-link">Live Blood Camps</a>
-                        <a href="donor.php" class="nav-item nav-link">Donor Registration</a>
-                        <a href="guidelinesphp" class="nav-item nav-link">Guidelines</a>
-                        <a href="login.php" class="nav-item nav-link">Login</a>
-                    </div>
-                </div>
-            </nav>
+            <?php include("navbar.php"); ?>
+
             <form action="livebloodcamp.php" method = "POST">
             <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                   <div class="carousel-inner">
@@ -186,6 +176,11 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown();
+            });
+        </script>
 
         <!-- Navbar & Carousel End -->
     </body>

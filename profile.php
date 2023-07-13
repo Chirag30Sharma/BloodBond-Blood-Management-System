@@ -2,11 +2,17 @@
 <?php 
 include('db.php'); 
 session_start();
-$email = $_GET['email'];
-$query = "SELECT name FROM mp_login WHERE email='$email'";
-$result = mysqli_query($conn, $query);
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: index.php');
+	exit;
+}
 
-if(mysqli_num_rows($result) > 0) {
+$email = $_SESSION["email"];
+$sql = "SELECT name FROM login WHERE email = '$email'";
+$result = mysqli_query($conn, $sql);
+
+if ($result && mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_assoc($result);
     $name = $row['name'];
 }
@@ -53,27 +59,9 @@ if(mysqli_num_rows($result) > 0) {
     </div>
     <!-- Spinner End -->
 
-
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-            <a href="index.php" class="navbar-brand p-0">
-                <h1 class="m-0">BLOODBOND</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="index.php" class="nav-item nav-link active">Home</a>
-                    <a href="livebloodcamp.php" class="nav-item nav-link">Live Blood Camps</a>
-                    <a href="donor.php" class="nav-item nav-link">Donor Registration</a>
-                    <a href="guidelines.php" class="nav-item nav-link">Guidelines</a>
-                    <a href="login_dashboard.php?name=<?php echo $name?>" class="nav-item nav-link"><?php echo $name; ?></a>
-</a>
-                </div>
-            </div>
-        </nav>
+        <?php include("navbar.php"); ?>
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
