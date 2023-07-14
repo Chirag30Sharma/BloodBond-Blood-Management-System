@@ -167,7 +167,7 @@ if (isset($_POST["log"])) {
   $email = $_POST["email"];
   $pswrd = $_POST["pswrd"];
 
-  $sql = "SELECT * FROM admin_registration WHERE email = '$email' AND password = '$pswrd'";
+  $sql = "SELECT * FROM admin_registration WHERE org_email = '$email' AND org_pass = '$pswrd'";
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) == 1) {
