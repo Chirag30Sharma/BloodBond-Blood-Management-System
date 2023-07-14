@@ -175,7 +175,7 @@ if (isset($_POST["log"])) {
 		$_SESSION['loggedin'] = TRUE;
     $_SESSION["email"] = $email;
 
-    header("Location: aaindex.php?email=$email");
+    header("Location: aaindex.php");
     exit;
   } else {
     echo "Invalid username or password";

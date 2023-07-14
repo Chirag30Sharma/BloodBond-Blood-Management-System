@@ -34,9 +34,6 @@ if ($result->num_rows > 0) {
 }  
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,10 +93,10 @@ if ($result->num_rows > 0) {
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle dropdown-hover" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More Action</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="BloodBond/logout.php">Logout</a>
+                    <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
             </div>
-            </nav>;
+            </nav>
         </nav>
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
