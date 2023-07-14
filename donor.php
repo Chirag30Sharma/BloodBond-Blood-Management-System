@@ -205,21 +205,8 @@ form .buttons button , .backBtn{
                     </div>
 
                     <div class="input-field">
-                        <label>Pregnant</label>
-                        <select name="pregnant" required>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </div>
-
-                    <div class="input-field">
-                        <label>Tattoo/Smoke/Drink</label>
-                        <select name="tsd" required>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
+                        <label>Do you have any vices?(Alchol,Smoking,Drugs)</label>
+                        <input type="text" name="vices" required>
                     </div>
 
                     <div class="input-field">
@@ -237,13 +224,13 @@ form .buttons button , .backBtn{
                     </div>
 
                     <div class="input-field">
-                        <label>Health Status</label>
-                        <select name="health" required>
-                            <option value="" disabled selected>Select Health Status</option>
-                            <option value="Very Good">Very Good</option>
-                            <option value="Good">Good</option>
-                            <option value="Poor">Poor</option>
-                        </select>
+                        <label>Current Medications(if any)</label>
+                        <input type="text" name="currentmed" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Allergies(if any)</label>
+                        <input type="text" name="allergies" required>
                     </div>
 
                     <div class="input-field">
@@ -257,17 +244,23 @@ form .buttons button , .backBtn{
                     </div>
 
                     <div class="input-field">
-                        <label>Do you take drugs? (like Marijuana, Heroin, etc.)</label>
-                        <select name="drug" required>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
+                        <label>Date of last travel</label>
+                        <input type="date" name="lasttravel" required>
                     </div>
 
                     <div class="input-field">
-                        <label>Date of last travel</label>
-                        <input type="date" name="lasttravel" required>
+                        <label>Emergency Contact Name</label>
+                        <input type="text" name="emname" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Emergency Contact Number</label>
+                        <input type="numeric" name="emno" required>
+                    </div>
+
+                    <div class="input">
+                            <label>Do you want to signup for newsletters?</label>
+                            <input type="checkbox" id="donor" name="in" value="1">
                     </div>
                 </div>
             </div>
@@ -286,19 +279,21 @@ include("db.php");
 if(isset($_POST["sub"])){
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $chronicd = $_POST['chronicd'];
-    $pregnant = $_POST['pregnant'];
-    $tsd = $_POST['tsd'];
+    $vices = $_POST['vices'];
     $covid = $_POST['covid'];
     $last = $_POST['last'];
-    $health = $_POST['health'];
+    $currentmed = $_POST['currentmed'];
     $weight = $_POST['weight'];
+    $allergies = $_POST['allergies'];
     $height = $_POST['height'];
-    $drug = $_POST['drug'];
     $lasttravel = $_POST['lasttravel'];
+    $emname = $_POST['emname'];
+    $emno = $_POST['emno'];
+    $donor = $_POST['donor'];
 
 
-    $stmt = $conn->prepare("INSERT INTO donor(chronic_disease, pregnant, tat_sm_dr, covid_vaccine, last_donated, health_status, weight, height, drugs, last_travel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssiiss", $chronicd, $pregnant, $tsd, $covid, $last, $health, $weight, $height, $drug, $lasttravel);
+    $stmt = $conn->prepare("INSERT INTO donor(chronic_disease, vices, covid_vaccine, last_donated, currentmed,allergies, weight, height, last_travel,emname,emno,donor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+    $stmt->bind_param("ssssssiissis", $chronicd, $vices, $covid, $last, $currentmed, $allergies,$weight, $height,$lasttravel,$emname,$emno,$donor);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
