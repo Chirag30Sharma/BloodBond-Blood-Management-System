@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -180,87 +190,96 @@ form .buttons button , .backBtn{
 
 </style>
 <body>
-    <div class="container">
-        <header>Donor Registration</header>
+<div class="container">
+    <header>Donor Registration</header>
 
-        <form action="donor.php" method = "POST">
-            <div class="form first">
-                <div class="details personal">
-                    <span class="title">Donor</span>
+    <form action="donor.php" method="POST">
+        <div class="form first">
+            <div class="details personal">
+                <span class="title">Donor</span>
 
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Mention if any chronic disease</label>
-                            <input type="text" name="chronicd" placeholder="" required>
-                        </div>
+                <div class="fields">
+                    <div class="input-field">
+                        <label>Mention if any chronic disease</label>
+                        <input type="text" name="chronicd" required>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Pregnant</label>
-                            <input type="text" name="pregnant" placeholder="Yes/No" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Pregnant</label>
+                        <select name="pregnant" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Tattoo/ Smoke/ Drink</label>
-                            <input type="text" name="tsd" placeholder="Yes/No" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Tattoo/Smoke/Drink</label>
+                        <select name="tsd" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Covid Vaccine</label>
-                            <input type="text" name="covid" placeholder="Yes/No" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Covid Vaccine</label>
+                        <select name="covid" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Last Donated</label>
-                            <input type="date" name="last" placeholder="" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Last Donated</label>
+                        <input type="date" name="last" required>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Health Status</label>
-                            <select name="health" required>
-                                <option disabled selected>Select Health Status</option>
-                                <option>Very Good</option>
-                                <option>Good</option>
-                                <option>Poor</option>
-                            </select>
-                        </div>
+                    <div class="input-field">
+                        <label>Health Status</label>
+                        <select name="health" required>
+                            <option value="" disabled selected>Select Health Status</option>
+                            <option value="Very Good">Very Good</option>
+                            <option value="Good">Good</option>
+                            <option value="Poor">Poor</option>
+                        </select>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Weight</label>
-                            <input type="numeric" name="weight" placeholder="Enter your Weight(in Kg)" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Weight</label>
+                        <input type="numeric" name="weight" required>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Height</label>
-                            <input type="numeric" name="height" placeholder="Enter your Height(in metre)" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Height</label>
+                        <input type="numeric" name="height" required>
+                    </div>
 
-                        <div class="input-field">
-                            <label>Do you take drugs?(like Marijuana, Heroin etc)(</label>
-                            <input type="text" name="drug" placeholder="" required>
-                        </div>
-                       
-                        <div class="input-field">
-                            <label>Date of last travel(</label>
-                            <input type="date" name="lasttravel" placeholder="" required>
-                        </div>
+                    <div class="input-field">
+                        <label>Do you take drugs? (like Marijuana, Heroin, etc.)</label>
+                        <select name="drug" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
 
-                        
+                    <div class="input-field">
+                        <label>Date of last travel</label>
+                        <input type="date" name="lasttravel" required>
                     </div>
                 </div>
-                    <button class="nextBtn" name = "sub">
-                        <span class="btnText">Register</span>
-                        <i class="uil uil-navigator"></i>
-                    </button>
-
-                    <div class="buttons">
-                        <div class="backBtn">
-                            <i class="uil uil-navigator"></i>
-                            <span class="btnText">Back</span>
-                        </div> 
-                </div> 
             </div>
-        </form>
-    </div>
+            <button class="nextBtn" name="sub">
+                <span class="btnText">Register</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+
 <?php
 include("db.php");
 
