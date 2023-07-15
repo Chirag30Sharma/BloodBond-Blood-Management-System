@@ -414,18 +414,39 @@ if ($result && mysqli_num_rows($result) == 1) {
     <!-- Footer End -->
 
     <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $mail = $_POST["mail"];
-    $subject = 'NEWSLETTER SUBSCRIPTION - BloodBond';
-    $body = 'Thank You';
-    $stmt = $conn->prepare("INSERT INTO mp_subscription(email_id) VALUES (?)");
-    $stmt->bind_param("s", $mail);
-    $stmt->execute();    
-
-    SendMail($subject,$body,$mail);
-
+    if (isset($_POST["signup"])) {
+        $mail = $_POST["mail"];
+        $subject = 'NEWSLETTER SUBSCRIPTION - BloodBond';
+        $body = 'Thank You for Subscription.';
+        
+        // Validate email format
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            echo "Invalid email format.";
+        } else {
+            // Check if the email already exists
+            $stmt = $conn->prepare("SELECT * FROM subscription WHERE email = ?");
+            $stmt->bind_param("s", $mail);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                echo "Email already exists.";
+            } else {
+                // Insert the email into the database
+                $stmt = $conn->prepare("INSERT INTO subscription(email) VALUES (?)");
+                $stmt->bind_param("s", $mail);
+                $stmt->execute();
+                
+                // Send subscription email
+                Subscription($subject, $body, $mail);
+                
+                echo "Thank You!";
+            }
+        }
     }
-    ?>
+?>
+
+
 
 
     <!-- Back to Top -->

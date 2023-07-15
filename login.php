@@ -143,7 +143,7 @@
       <input type="password" placeholder="Enter Password" name="pswrd" required>
 
       <div class="subcontainer">
-        <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>
+        <p class="forgotpsd"> <a href="forgot.php">Forgot Password?</a></p>
       </div>
 
       <!-- Submit button -->
