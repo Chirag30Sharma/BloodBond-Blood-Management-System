@@ -316,6 +316,12 @@ if (isset($_POST["sub"])) {
                 } else {
                     echo "<script>window.location = 'login.php';</script>";
                 }
+
+                $subject = 'REGISTERING NOTIFICATION - BloodBond';
+                $body = 'Thank You for registering with us.';
+        
+                registering($subject, $body, $email);
+
             } else {
                 echo "Error occurred during registration.";
             }

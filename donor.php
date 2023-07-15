@@ -277,7 +277,6 @@ form .buttons button , .backBtn{
 include("db.php");
 
 if(isset($_POST["sub"])){
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $chronicd = $_POST['chronicd'];
     $vices = $_POST['vices'];
     $covid = $_POST['covid'];
@@ -300,9 +299,7 @@ if(isset($_POST["sub"])){
         echo "Registration successful!";
         echo "<script>window.location = 'index.php';</script>";
         }
-    }
-
-    }
+}
 ?>
 
 </body>
