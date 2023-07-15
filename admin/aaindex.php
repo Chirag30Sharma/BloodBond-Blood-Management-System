@@ -32,6 +32,58 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }  
+
+
+$stmt = $conn->prepare("SELECT a_pos, a_neg, b_pos, b_neg, o_pos, o_neg, ab_pos, ab_neg FROM Blood_Stock WHERE org_email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $a_pos = $row['a_pos'];
+        $a_neg = $row['a_neg'];
+        $b_pos = $row['b_pos'];
+        $b_neg = $row['b_neg'];
+        $o_pos = $row['o_pos'];
+        $o_neg = $row['o_neg'];
+        $ab_pos = $row['ab_pos'];
+        $ab_neg = $row['ab_neg'];
+    }
+
+} else {
+    echo "0 results";
+} 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['security_pin'])) {
+        $securityPin = '1234';
+        $enteredPin = $_POST['security_pin'];
+
+        if ($enteredPin === $securityPin) {
+            $showBloodStockPopup = true;
+        } else {
+            echo "<script>alert('Invalid security pin!');</script>";
+        }
+    }
+    if (isset($_POST["save"])) {
+        $bloodGroup = $_POST['blood_group'];
+        $unitCount = $_POST['unit_count'];
+
+        // Insert the data into the database
+        // Modify the following code to insert the values into your database table
+        $sql = "INSERT INTO blood_stock (blood_group, unit_count) VALUES ('$bloodGroup', '$unitCount')";
+        if (mysqli_query($conn, $sql)) {
+            echo "<script>alert('Blood stock saved successfully!');</script>";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    
+    }
+
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -141,11 +193,27 @@ if ($result->num_rows > 0) {
                                         </div>
                                     </a>
                                 </div>
+                            
                             </div>
                         </div>
-
+                        <br><br>
                         </div>
+                            <a href="blood.php" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Manage Blood Stock</a>
+                        </div>
+                         <!-- Popup for Security Pin -->
+                        
+                        <!-- <div id="popup1" class="overlay">
+                            <div class="popup">
+                                <h2>Here i am</h2>
+                                <a class="close" href="#popup1">&times;</a>
+                                <div class="content">
+                                Thank to pop me out of that button, but now i'm done so you can close this window.
+                                </div>
+                            </div>
+                        </div> -->
+                        
                     </div>
+                    
                 </div>
             </div>
             
