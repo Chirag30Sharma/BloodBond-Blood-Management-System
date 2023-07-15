@@ -197,9 +197,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <br><br>
-                        </div>
-                            <a href="blood.php" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Manage Blood Stock</a>
-                        </div>
+                        
+                        <a href="blood.php" class="btn btn-outline-light py-md-3 px-md-5">Manage Blood Stock</a>
+                        <a href="bloodcamp.php" class="btn btn-outline-light py-md-3 px-md-5">Create Blood Camp</a>
+                    
                          <!-- Popup for Security Pin -->
                         
                         <!-- <div id="popup1" class="overlay">
