@@ -63,7 +63,7 @@ if (isset($_SESSION['loggedin'])) {
                         <div class="p-3" style="max-width: 900px;">
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Saving lives</h1>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">One drop at a time</h1>
-                            <a href="donate_button.php" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Donate</a>
+                            <a href="livebloodcamp.php" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Donate</a>
                             <a href="seeker_final.php" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Seeker</a>
                         </div>
                     </div>
@@ -365,7 +365,6 @@ if (isset($_SESSION['loggedin'])) {
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start">
                                 <a class="text-light mb-2" href="contact.php"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-                                <a class="text-light mb-2" href="feedback.php"><i class="bi bi-arrow-right text-primary me-2"></i>Feedback</a>
                             </div>
 
                             <div class="d-flex mt-4">

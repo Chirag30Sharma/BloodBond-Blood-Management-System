@@ -205,8 +205,12 @@ form .buttons button , .backBtn{
                     </div>
 
                     <div class="input-field">
-                        <label>Do you have any vices?(Alchol,Smoking,Drugs)</label>
-                        <input type="text" name="vices" required>
+                        <label>Do you have any vices? (Alcohol, Smoking, Drugs)</label>
+                        <select name="vices" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
                     </div>
 
                     <div class="input-field">
@@ -260,7 +264,7 @@ form .buttons button , .backBtn{
 
                     <div class="input">
                             <label>Do you want to signup for newsletters?</label>
-                            <input type="checkbox" id="donor" name="in" value="1">
+                            <input type="checkbox" id="donor" name="in" value="1"> 
                     </div>
                 </div>
             </div>
@@ -277,6 +281,7 @@ form .buttons button , .backBtn{
 include("db.php");
 
 if(isset($_POST["sub"])){
+    $email = $_SESSION['email'];
     $chronicd = $_POST['chronicd'];
     $vices = $_POST['vices'];
     $covid = $_POST['covid'];
@@ -288,17 +293,22 @@ if(isset($_POST["sub"])){
     $lasttravel = $_POST['lasttravel'];
     $emname = $_POST['emname'];
     $emno = $_POST['emno'];
-    $donor = $_POST['donor'];
 
-
-    $stmt = $conn->prepare("INSERT INTO donor(chronic_disease, vices, covid_vaccine, last_donated, currentmed,allergies, weight, height, last_travel,emname,emno,donor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
-    $stmt->bind_param("ssssssiissis", $chronicd, $vices, $covid, $last, $currentmed, $allergies,$weight, $height,$lasttravel,$emname,$emno,$donor);
+    $stmt = $conn->prepare("INSERT INTO donor_registration(email, chronic, vices, covid_vaccine, last_donated, cur_med, allergies, weight, height, last_travel,emerg_name,emerg_cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+    $stmt->bind_param("ssssssssssss", $email, $chronicd, $vices, $covid, $last, $currentmed, $allergies,$weight, $height,$lasttravel,$emname,$emno);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
         echo "Registration successful!";
         echo "<script>window.location = 'index.php';</script>";
         }
+    
+    if (isset($_POST['in']) && $_POST['in'] === "1") {
+        $stmt2 = $conn->prepare("INSERT INTO subscription(email) VALUES (?)");
+        $stmt2->bind_param("s", $email);
+        $stmt2->execute();
+    }
+    
 }
 ?>
 

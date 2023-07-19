@@ -71,7 +71,7 @@ if ($result && mysqli_num_rows($result) == 1) {
                         <div class="p-3" style="max-width: 900px;">
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Saving lives</h1>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">One drop at a time</h1>
-                            <a href="quotephp" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Donate</a>
+                            <a href="livebloodcamp.php" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Donate</a>
                             <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Seeker</a>
                         </div>
                     </div>
@@ -334,9 +334,6 @@ if ($result && mysqli_num_rows($result) == 1) {
         </div>
     </div>
     <!-- Blog Start -->
-
-
-    
     
 
     <!-- Footer Start -->
@@ -371,6 +368,10 @@ if ($result && mysqli_num_rows($result) == 1) {
                                 <i class="bi bi-telephone text-primary me-2"></i>
                                 <p class="mb-0">022 - 12345678</p>
                             </div>
+                            <div class="link-animated d-flex flex-column justify-content-start">
+                                <a class="text-light mb-2" href="contact.php"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                            </div>
+
                             <div class="d-flex mt-4">
                                 <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -389,7 +390,6 @@ if ($result && mysqli_num_rows($result) == 1) {
                                 <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
                                 <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
                                 <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
                             </div>
                         </div>
                     </div>

@@ -131,6 +131,16 @@ body {
       </div>
 
       <div class="input-field">
+        <label>Locality</label>
+        <input type="text" name="location" placeholder="Enter Location" required>
+      </div>
+
+      <div class="input-field">
+        <label>Google Maps Frame:</label>
+        <input type="text" name="frame" placeholder="Enter Frame Tag" required>
+      </div>
+
+      <div class="input-field">
         <label>Contact info</label>
         <input type="text" name="contact_info" placeholder="Enter contact number" required>
       </div>
@@ -156,17 +166,18 @@ body {
 
   <?php
   if (isset($_POST["create"])) {
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $date = $_POST['date'];
           $address = $_POST['address'];
+          $location = $_POST['location'];
+          $frame = $_POST['frame'];
           $contact_info = $_POST['contact_info'];
           $content = $_POST['content'];
 
-          $stmt = $conn->prepare("INSERT INTO bloodcamp(org_email,org_name,date, address, contact_info, content) VALUES (?, ?, ?, ?, ?, ?)");
-          $stmt->bind_param("ssssss", $email, $org_name, $date, $address, $contact_info, $content);
+          $stmt = $conn->prepare("INSERT INTO bloodcamp(org_email,org_name,date, address, location, iframe, contact_info, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+          $stmt->bind_param("ssssssss", $email, $org_name, $date, $address, $location, $frame, $contact_info, $content);
           $stmt->execute();
-      }
   }
+  
   ?>
 
 </body>
