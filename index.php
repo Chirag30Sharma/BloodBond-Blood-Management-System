@@ -412,7 +412,10 @@ if (isset($_SESSION['loggedin'])) {
     if (isset($_POST["signup"])) {
         $mail = $_POST["mail"];
         $subject = 'NEWSLETTER SUBSCRIPTION - BloodBond';
-        $body = 'Thank You for Subscription.';
+        $body = '<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6;">Thank you for becoming a part of the Bloodbond family!<br><br>
+        Your compassionate act of signing up for our newsletter brings hope to countless lives.<br><br>
+        Together, we can make a real difference in the world by ensuring a steady supply of blood for those in need.<br><br>
+        Stay tuned for updates, inspiring stories, and opportunities to save lives! 🩸❤️</p>';
         
         // Validate email format
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
