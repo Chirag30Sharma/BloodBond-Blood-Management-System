@@ -35,6 +35,8 @@ if ($result->num_rows > 0) {
         $ab_neg = $row['ab_neg'];
     }
 
+
+
 } else {
     echo "0 results";
 } 
@@ -181,8 +183,32 @@ if(isset($_POST["save"])){
         </table>
         <button type="submit" name="save">Save</button>
     </form>
+</div>
 
-    <!-- Add your JavaScript code here -->
+    <script>
+        
+        const bloodGroups = [
+            { name: 'A+', count: <?php echo $a_pos; ?> },
+            { name: 'A-', count: <?php echo $a_neg; ?> },
+            { name: 'B+', count: <?php echo $b_pos; ?> },
+            { name: 'B-', count: <?php echo $b_neg; ?> },
+            { name: 'O+', count: <?php echo $o_pos; ?> },
+            { name: 'O-', count: <?php echo $o_neg; ?> },
+            { name: 'AB+', count: <?php echo $ab_pos; ?> },
+            { name: 'AB-', count: <?php echo $ab_neg; ?> },
+        ];
+
+        const tableRows = document.querySelectorAll('tr');
+
+        bloodGroups.forEach((bloodGroup, index) => {
+            const countCell = tableRows[index + 1].querySelector('input[type="number"]');
+            if (bloodGroup.count <= 10) {
+                countCell.style.backgroundColor = 'red';
+                countCell.style.color = 'white';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
