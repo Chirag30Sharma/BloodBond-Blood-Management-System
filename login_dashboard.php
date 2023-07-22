@@ -1,14 +1,15 @@
 <?php 
 include('db.php'); 
 session_start();
-$name = $_GET['name'];
-$query = "SELECT gender,bloodgroup FROM mp_login WHERE name='$name'";
+$email = $_SESSION['email'];
+$query = "SELECT name, gender,bloodgroup FROM login WHERE email='$email'";
 $result = mysqli_query($conn, $query);
 
 if(mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     $gender = $row['gender'];
     $bg = $row['bloodgroup'];
+    $name = $row['name'];
 }
 
 ?>
@@ -34,13 +35,30 @@ if(mysqli_num_rows($result) > 0) {
     </div>
       <ul class="nav-links">
         <li>
-          <a href="#" class="active">
+          <a href="login_dashboard.php" class="active">
             <i class='bx bx-grid-alt' ></i>
             <span class="links_name">Dashboard</span>
           </a>
         </li>
-        
-          
+        <li>
+          <a href="update.php" class="active">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Update Login Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="update_donor.php" class="active">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Update Donor Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="update_pass.php" class="active">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Update Password</span>
+          </a>
+        </li>
+
       </ul>
   </div>
   <section class="home-section">
@@ -56,7 +74,7 @@ if(mysqli_num_rows($result) > 0) {
       <div class="profile-details">
         <!--<img src="images/profile.jpg" alt="">-->
         <span class="admin_name">Welcome! <?php echo $name?></span>
-        <i class='bx bx-chevron-down' ></i>
+        <a href = "logout.php">Logout</a>
       </div>
     </nav>
 
