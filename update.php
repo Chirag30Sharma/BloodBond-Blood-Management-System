@@ -171,7 +171,7 @@ if(isset($_POST['save'])){
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        echo "Updation done";
+        header("Refresh:0");
         exit();
     }
 

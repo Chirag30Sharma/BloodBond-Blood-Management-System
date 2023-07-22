@@ -145,6 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle dropdown-hover" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More Action</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="profile.php">Profile</a>
+                    <a class="dropdown-item" href="change_pass.php">Change Password</a>
                     <a class="dropdown-item" href="logout.php">Logout</a>
                 </div>
             </div>
