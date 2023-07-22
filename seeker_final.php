@@ -33,7 +33,7 @@
         <style>
             .card {
                 width: 450px;
-                height: 300px;
+                height: 350px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 padding: 20px;
@@ -148,17 +148,15 @@
     <?php 
     include('db.php'); 
     if(isset($_POST['submit'])) {
+
         $blood_group = $_POST['blood_group'];
         $address = $_POST['address'];
-        $query = "SELECT hospital_name,email,address,phonenum,sufsup FROM mp_admin WHERE sufsup = '$blood_group' AND address = '$address'";
+        $query = "SELECT org_email,sufsup FROM Blood_Stock WHERE sufsup = '$blood_group'";
         $result = mysqli_query($conn, $query);
 
         if(mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-                $hospital_name = $row['hospital_name'];
-                $email = $row['email'];
-                $address = $row['address'];
-                $phonenum = $row['phonenum'];
+                $email = $row['org_email'];
                 $sufsup = $row['sufsup'];
         }
             
@@ -167,14 +165,49 @@
             echo "0 results";
         }
 
+
+        $stmt = $conn->prepare("SELECT org_name, org_add, org_no, website_url FROM admin_registration WHERE org_email = ?");
+        $stmt->bind_param("s", $email);
+
+        
+        if (!$stmt->execute()) {
+            die("Error executing the query: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                
+                    $org_name = $row['org_name'];
+                    $org_add = $row['org_add'];
+                    $org_no = $row['org_no'];
+                    $website_url = $row['website_url'];
+                
+            }
+        } else {
+            echo "No booking details found for the organization: $name";
+        }
+
+
         echo '<div class="card">';
-        echo '<h1>' . $hospital_name .'</h1>';
-        echo '<p><span>Address : </span>'. $address.'</p>';
+        echo '<h2>'. $org_name.'</h2>';
         echo '<h5> Contact Details </h5>';
+        echo '<p><span>Address : </span>'. $org_add.'</p>';
         echo '<p><span>Email : </span>'. $email.'</p>';
-        echo '<p><span>Phone number : </span>'.$phonenum.'</p>';
+        echo '<p><span>Contact Info : </span>'. $org_no.'</p>';
+        echo '<p><span>Website URL : </span>'. $website_url.'</p>';
+        echo '<button type="sub" class="btn" name="upd">Seek</button>';
         echo '</div>';
-    
+        
+        // if(isset($_POST["upd"])){
+        //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        //         $sufsup = $_POST["sufsup"];
+        //         $stmt = $conn->prepare("UPDATE Blood_Stock SET sufsup = ? WHERE org_email = ?");
+        //         $stmt->bind_param("ss", $sufsup, $email);
+        //         $result = $stmt->execute();
+        //     }
+        // }
     }
 
     

@@ -1,25 +1,64 @@
 <?php
 include('inc/db.php');
-
-if(isset($_GET['email'])){
-    $email = $_GET['email'];
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: index.php');
+	exit;
 }
 
-$stmt = $conn->prepare("SELECT Hospital_name, Address, Phonenum FROM mp_admin WHERE Email = ?");
+$email = $_SESSION["email"];
+$sql = "SELECT org_name FROM admin_registration WHERE org_email = '$email'";
+$result = mysqli_query($conn, $sql);
+
+if ($result && mysqli_num_rows($result) == 1) {
+    $row = mysqli_fetch_assoc($result);
+    $name = $row['org_name'];
+}
+
+
+$stmt = $conn->prepare("SELECT a_pos, a_neg, b_pos, b_neg, o_pos, o_neg, ab_pos, ab_neg FROM Blood_Stock WHERE org_email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 
 $result = $stmt->get_result();
 
+$bloodGroups = array();
+
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        $hospital_name = $row['Hospital_name'];
-        $hospital_address = $row['Address'];
-        $hospital_num = $row['Phonenum'];
+        $bloodGroups = array(
+            'A+' => $row['a_pos'],
+            'A-' => $row['a_neg'],
+            'B+' => $row['b_pos'],
+            'B-' => $row['b_neg'],
+            'O+' => $row['o_pos'],
+            'O-' => $row['o_neg'],
+            'AB+' => $row['ab_pos'],
+            'AB-' => $row['ab_neg'],
+        );
     }
 } else {
     echo "0 results";
-}  
+} 
+
+$orgDetails = array();
+
+$stmt = $conn->prepare("SELECT org_add, org_no, website_url FROM admin_registration WHERE org_email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $orgDetails = array(
+        'org_add' => $row['org_add'],
+        'org_no' => $row['org_no'],
+        'website_url' => $row['website_url']
+    );
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +73,7 @@ if ($result->num_rows > 0) {
             padding-top: 5%;
             font-family: sans-serif;
             background: #4070f4;
-            color: black;
+            color: white;
         }
 
 
@@ -160,30 +199,28 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-  
         <div class="mainContainer">
             <div class="headingsContainer">
             <h2>Add Necessary Details</h2>
             </div>
             <div class="form-popup" id="add-form">
                 <form method="post" action="avail.php?email=<?php echo $email;?>" >
-                    <label for="sufsup"><b>Blood Group</b></label>
+                    <label for="hospital_name"><b>Hospital Name : </b></label>
+                    <?php echo $name;?><br><br>
+                    <label for="sufsup"><b>Available Blood Group : </b></label>
                     <select id="sufsup" name="sufsup">
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    </select>
-                    <label for="hospital_name"><b>Hospital Name</b></label>
-                    <?php echo $hospital_name;?><br><br>
-                    <label for="Address"><b>Hospital Address</b></label>
-                    <?php echo $hospital_address?><br><br>
-                    <label for="hospital-contact"><b>Hospital Contact Number</b></label>
-                    <?php echo $hospital_num?><br><br>
+                        <?php foreach ($bloodGroups as $bloodGroup => $count) : ?>
+                            <?php if ($count >= 55) : ?>
+                                <option value="<?php echo $bloodGroup; ?>"><?php echo $bloodGroup; ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select><br><br>
+                    <label for="hospital_add"><b>Hospital Address : </b></label>
+                    <?php echo isset($orgDetails['org_add']) ? $orgDetails['org_add'] : 'N/A'; ?><br><br>
+                    <label for="hospital_no"><b>Contact Info : </b></label>
+                    <?php echo isset($orgDetails['org_no']) ? $orgDetails['org_no'] : 'N/A'; ?><br><br>
+                    <label for="hospital_url"><b>Website URL : </b></label>
+                    <?php echo isset($orgDetails['website_url']) ? $orgDetails['website_url'] : 'N/A'; ?><br><br>
                     <button type="sub" class="btn" name="upd" onclick="showPopup()">Update</button>
                 </form>
             </div>
@@ -192,7 +229,7 @@ if ($result->num_rows > 0) {
         <!-- Popup message -->
         <div id="popup" class="popup">
             <div class="popup-message">
-                Blood group updated successfully!
+                Blood group availability updated successfully!
             </div>
         </div>
 
@@ -209,19 +246,14 @@ if ($result->num_rows > 0) {
         </script>
 </body>
 </html>
-
 <?php
 if(isset($_POST["upd"])){
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sufsup = $_POST["sufsup"];
-        $stmt = $conn->prepare("UPDATE mp_admin SET SufSup = ? WHERE Email = ?");
+        $stmt = $conn->prepare("UPDATE Blood_Stock SET sufsup = ? WHERE org_email = ?");
         $stmt->bind_param("ss", $sufsup, $email);
         $result = $stmt->execute();
-        // if($result) {
-        //     echo "Blood group updated successfully!";
-        // } else {
-        //     echo "Error updating blood group.";
-        // }
     }
 }
 ?>
+
