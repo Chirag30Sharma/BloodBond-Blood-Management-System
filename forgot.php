@@ -57,6 +57,40 @@
     input[type="submit"]:hover {
       background-color: #45a049;
     }
+    .popup-box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .popup-box p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .popup-box button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .popup-box button:hover {
+        background-color: #0056b3;
+    }
+
   </style>
 </head>
 <body>
@@ -99,11 +133,16 @@
             <p>Thank you for using our services.</p>
             
             <p>Best regards,<br> BloodBond.</p>";
-
-            echo "You are registered with us. Sending you an email to reset your password.";
+            echo '<div class="popup-box">
+                        <p>You are registered with us. Sending you an email to reset your password.</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
             forgot($subject, $body, $mail);
         } else {
-            echo "You are not registered with us.";
+            echo '<div class="popup-box">
+                        <p>You are not registered with us.</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
         }
     }
 ?>

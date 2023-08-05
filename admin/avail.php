@@ -143,27 +143,17 @@ if ($result->num_rows > 0) {
             margin-bottom: 12px;
         }
 
-        .popup {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 1;
-			justify-content: center;
-			align-items: center;
-		}
-
-		.popup-message {
-			background-color: #ffffff;
-			padding: 20px;
-			border-radius: 5px;
-			box-shadow: 0px 0px 5px #999999;
-			font-size: 18px;
-			text-align: center;
-		}
+        .popup-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
 
 
         .register {
@@ -191,6 +181,40 @@ if ($result->num_rows > 0) {
             width: 20rem;
             }
         }
+        .popup-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.popup-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.popup-box button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.popup-box button:hover {
+    background-color: #0056b3;
+}
+
     </style>
 
 
@@ -265,9 +289,15 @@ if (isset($_POST["upd"])) {
         $stmt->bind_param("ss", $selectedLabelName, $email);
         $result = $stmt->execute();
         if ($result) {
-            echo "Blood group availability updated successfully!";
+            echo '<div class="popup-box">
+                        <p>Blood group availability updated successfully!</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
         } else {
-            echo "Error updating blood group availability: " . $conn->error;
+            echo '<div class="popup-box">
+                        <p>"Error updating blood group availability: " . $conn->error</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
         }
     }
 }

@@ -81,7 +81,11 @@ if (isset($_GET['org_name'], $_GET['date'], $_GET['address'])) {
         $sql = "INSERT INTO donate (org_name, date, address, user_email, user_name) VALUES ('$org_name', '$date', '$address', '$email', '$name')";
 
         if (mysqli_query($conn, $sql)) {
-            echo "Booking Successful Check the Email";
+            echo '<div class="popup-box">
+                        <p>Booking Successful Check the Email</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
+    }
             $subject = "Blood Donation Booking Details";
             $body = "<p>Hello $name,</p>
                     <p>Thank you for booking a blood donation camp.</p>
@@ -95,8 +99,12 @@ if (isset($_GET['org_name'], $_GET['date'], $_GET['address'])) {
             donate($subject, $body, $email);
             header("Location: index.php");
         } else {
-            echo "Error Occured during something. Pls check";
-        }
-    
+            echo '<div class="popup-box">
+                        <p>Error fetching details!</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
     }
+        
+    
+    
 ?>

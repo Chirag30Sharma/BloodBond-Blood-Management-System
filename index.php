@@ -407,7 +407,6 @@ if (isset($_SESSION['loggedin'])) {
         </div>
     </div>
     <!-- Footer End -->
-
     <?php
     if (isset($_POST["signup"])) {
         $mail = $_POST["mail"];
@@ -417,32 +416,42 @@ if (isset($_SESSION['loggedin'])) {
         Together, we can make a real difference in the world by ensuring a steady supply of blood for those in need.<br><br>
         Stay tuned for updates, inspiring stories, and opportunities to save lives! 🩸❤️</p>';
         
-        // Validate email format
+
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            echo "Invalid email format.";
+            echo '<div class="popup-box">
+                    <p>Invalid email format.</p>
+                    <button onclick="closePopup()">OK</button>
+                </div>';
         } else {
-            // Check if the email already exists
+            
             $stmt = $conn->prepare("SELECT * FROM subscription WHERE email = ?");
             $stmt->bind_param("s", $mail);
             $stmt->execute();
             $result = $stmt->get_result();
             
             if ($result->num_rows > 0) {
-                echo "Email already exists.";
+                echo '<div class="popup-box">
+                        <p>Email already exists.</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
             } else {
-                // Insert the email into the database
+        
                 $stmt = $conn->prepare("INSERT INTO subscription(email) VALUES (?)");
                 $stmt->bind_param("s", $mail);
                 $stmt->execute();
                 
-                // Send subscription email
+            
                 Subscription($subject, $body, $mail);
                 
-                echo "Thank You!";
+                echo '<div class="popup-box">
+                        <p>Thank You!</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
             }
         }
     }
 ?>
+
 
 
 
@@ -462,6 +471,12 @@ if (isset($_SESSION['loggedin'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        function closePopup() {
+            var popupBox = document.querySelector('.popup-box');
+            popupBox.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

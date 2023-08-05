@@ -23,9 +23,8 @@ function Subscription($subject,$body,$receipent)
         $mail->Body    = $body;
         
         $mail->send();
-        echo 'Message has been sent';
     } catch (\PHPMailer\PHPMailer\Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 
 }

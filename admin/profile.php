@@ -76,6 +76,7 @@ if (isset($_POST["save"])) {
         .profile-card .btn-primary {
             margin-right: 10px;
         }
+        
     </style>
 </head>
 <body>

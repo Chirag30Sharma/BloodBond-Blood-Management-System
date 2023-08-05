@@ -30,7 +30,10 @@ if ($result->num_rows > 0) {
     }
 
 } else {
-    echo "0 results";
+    echo '<div class="popup-box">
+                        <p>Error while fetching details</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
 }  
 
 

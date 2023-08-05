@@ -97,6 +97,17 @@ if ($result->num_rows > 0) {
 		.button:hover {
 			background-color: #0051a8;
 		}
+		.popup-box {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: white;
+			padding: 20px;
+			border: 1px solid #ccc;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			z-index: 1000;
+}
 
 	</style>
 </head>

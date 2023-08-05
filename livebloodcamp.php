@@ -170,7 +170,10 @@ include("db.php");
                         $addressHeight = min(100, max(30, substr_count($address, "\n") * 20));
                     }
                 } else {
-                    echo "0 results";
+                    echo '<div class="popup-box">
+                        <p>Error fetching details</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>';
                 }
 
                 echo '<div class="card" style="height: ' . (300 + $addressHeight) . 'px;">';
