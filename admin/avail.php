@@ -211,7 +211,7 @@ if ($result->num_rows > 0) {
                     <select id="sufsup" name="sufsup">
                         <?php foreach ($bloodGroups as $bloodGroup => $count) : ?>
                             <?php if ($count >= 55) : ?>
-                                <option value="<?php echo $bloodGroup; ?>"><?php echo $bloodGroup; ?></option>
+                                <option value="<?php echo $labelName . ':' . $bloodGroupColumnMapping[$labelName]; ?>"><?php echo $labelName; ?></option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select><br><br>
@@ -247,12 +247,28 @@ if ($result->num_rows > 0) {
 </body>
 </html>
 <?php
-if(isset($_POST["upd"])){
+$bloodGroupColumnMapping = array(
+    'A+' => 'a_pos',
+    'A-' => 'a_neg',
+    'B+' => 'b_pos',
+    'B-' => 'b_neg',
+    'O+' => 'o_pos',
+    'O-' => 'o_neg',
+    'AB+' => 'ab_pos',
+    'AB-' => 'ab_neg'
+);
+if (isset($_POST["upd"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $sufsup = $_POST["sufsup"];
-        $stmt = $conn->prepare("UPDATE Blood_Stock SET sufsup = ? WHERE org_email = ?");
-        $stmt->bind_param("ss", $sufsup, $email);
+        $selectedOption = $_POST["sufsup"];
+        list($selectedLabelName, $selectedColumnName) = explode(':', $selectedOption);
+        $stmt = $conn->prepare("UPDATE Blood_Stock SET $selectedColumnName = ? WHERE org_email = ?");
+        $stmt->bind_param("ss", $selectedLabelName, $email);
         $result = $stmt->execute();
+        if ($result) {
+            echo "Blood group availability updated successfully!";
+        } else {
+            echo "Error updating blood group availability: " . $conn->error;
+        }
     }
 }
 ?>

@@ -72,7 +72,7 @@ if ($result && mysqli_num_rows($result) == 1) {
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Saving lives</h1>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">One drop at a time</h1>
                             <a href="livebloodcamp.php" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Donate</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Seeker</a>
+                            <a href="seeker_final.php" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Seeker</a>
                         </div>
                     </div>
                 </div>
@@ -385,11 +385,11 @@ if ($result && mysqli_num_rows($result) == 1) {
                                 <h3 class="text-light mb-0">Quick Links</h3>
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                                <a class="text-light mb-2" href="#about-us"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+                                <a class="text-light mb-2" href="#services"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+                                <a class="text-light mb-2" href="#blog"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+                                <a class="text-light mb-2" href="admin/aindex.php"><i class="bi bi-arrow-right text-primary me-2"></i>Admin</a>
                             </div>
                         </div>
                     </div>
