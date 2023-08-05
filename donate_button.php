@@ -48,10 +48,13 @@ if (isset($_GET['org_name'], $_GET['date'], $_GET['address'])) {
                                 echo $iframe;
                             }
                         ?>
-
-                        <form method="post">
-                            <input type="submit" class="btn btn-primary" name="confirm_booking" value="Confirm Booking">
-                        </form>
+                    <form method="post" id="bookingForm">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="redirectCheckbox" name="redirectCheckbox">
+                            <label class="form-check-label" for="redirectCheckbox">Want to donate Platelets as Well?</label>
+                        </div>
+                        <input type="submit" class="btn btn-primary" name="confirm_booking" value="Confirm Booking">
+                    </form>
                     </div>
                 </div>
             </div>
@@ -67,25 +70,31 @@ if (isset($_GET['org_name'], $_GET['date'], $_GET['address'])) {
 </html>
 
 <?php
-    include("mail.php");
-    $email = $_SESSION["email"];
-    $sql = "SELECT name FROM login WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
+include("mail.php");
+$email = $_SESSION["email"];
+$sql = "SELECT name FROM login WHERE email = '$email'";
+$result = mysqli_query($conn, $sql);
+$redirect = isset($_POST['redirectCheckbox']) && $_POST['redirectCheckbox'] === 'on'; // Fixed the checkbox value check.
 
-    if (mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        $name = $row['name'];
+if (mysqli_num_rows($result) === 1) {
+    $row = mysqli_fetch_assoc($result);
+    $name = $row['name'];
+}
+
+if (isset($_POST['confirm_booking'])) {
+    // Convert the checkbox value to 1 or 0 for database insertion.
+    $plateletValue = $redirect ? 1 : 0;
+
+    if($plateletValue == 1){
+        header("Location: plate.php");
     }
 
-    if (isset($_POST['confirm_booking'])) {
-        $sql = "INSERT INTO donate (org_name, date, address, user_email, user_name) VALUES ('$org_name', '$date', '$address', '$email', '$name')";
+    else{
+        // Insert data into the database with the platelet value.
+        $sql = "INSERT INTO donate (org_name, date, address, user_email, user_name, donate_platelets) VALUES ('$org_name', '$date', '$address', '$email', '$name', $plateletValue)";
 
         if (mysqli_query($conn, $sql)) {
-            echo '<div class="popup-box">
-                        <p>Booking Successful Check the Email</p>
-                        <button onclick="closePopup()">OK</button>
-                    </div>';
-    }
+            echo "Booking Successful Check the Email";
             $subject = "Blood Donation Booking Details";
             $body = "<p>Hello $name,</p>
                     <p>Thank you for booking a blood donation camp.</p>
@@ -100,11 +109,10 @@ if (isset($_GET['org_name'], $_GET['date'], $_GET['address'])) {
             header("Location: index.php");
         } else {
             echo '<div class="popup-box">
-                        <p>Error fetching details!</p>
-                        <button onclick="closePopup()">OK</button>
-                    </div>';
+            <p>Error fetching details!</p>
+            <button onclick="closePopup()">OK</button>
+            </div>';    
+        }
     }
-        
-    
-    
+}
 ?>
