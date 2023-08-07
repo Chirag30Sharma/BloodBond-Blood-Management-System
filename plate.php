@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("db.php");
+include("mail.php");
 
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php');
@@ -66,26 +67,59 @@ if (isset($_POST['submit'])) {
     if ($userAnswers[1] === 'D. More than 6 months ago') {
         $canDonatePlatelet = true;
     }
+    if ($userAnswers[1] === 'C. 3 to 6 months ago') {
+        $canDonatePlatelet = true;
+    }
+    if ($userAnswers[1] === 'B. 1 to 3 months ago') {
+        $canDonatePlatelet = false;
+    }
+    if ($userAnswers[1] === 'A. Less than 1 month ago') {
+        $canDonatePlatelet = false;
+    }
+
 
     // Question 3: How much did you donate in this year?
     if ($userAnswers[2] === 'D. More than 5 times') {
-        $canDonatePlatelet = false; // The user cannot donate platelets if they donated more than 5 times this year.
+        $canDonatePlatelet = false;
+    }
+    if ($userAnswers[2] === 'C. 3 to 5 times') {
+        $canDonatePlatelet = true;
+    }
+    if ($userAnswers[2] === 'B. 1 to 3 times') {
+        $canDonatePlatelet = true;
+    }
+    if ($userAnswers[2] === 'A. Less than 1 time') {
+        $canDonatePlatelet = true;
     }
 
     if ($canDonatePlatelet) {
         // Perform the database entry here for users who can donate platelets.
         // Modify this part based on your database structure and requirements.
         $email = $_SESSION["email"];
-        $sql = "INSERT INTO platelet_donors (email) VALUES ('$email')";
+        $answer1 = $userAnswers[0];
+        $answer2 = $userAnswers[1];
+        $answer3 = $userAnswers[2];
+    
+        $sql = "INSERT INTO platelet_donors (email, answer1, answer2, answer3) VALUES ('$email', '$answer1', '$answer2', '$answer3')";
         if (mysqli_query($conn, $sql)) {
             // If the database entry is successful, show the success message and redirect using JavaScript.
             echo '<script>alert("Congratulations! You can donate platelets. Thank you for your willingness to donate!"); window.location.href = "index.php";</script>';
+            $subject = "Platelet Donation Booking Details";
+            $body = "<p>Hello $email,</p>
+                    <p>Thank you for booking a platelet donation camp with us.</p>
+                    <p>Come on time and please bring any government official ID.</p>
+                    <p>Best regards,<br>The Blood Donation Team</p>";
+
+            plate($subject, $body, $email);
             exit;
         } else {
             $message = "Error occurred during database entry. Please try again.";
         }
     } else {
-        $message = "Sorry, you cannot donate platelets based on your answers. Thank you for your willingness to donate!";
+        echo '<div class="popup-box">
+        <p>Sorry Sorry Sorry!! You can not donate blood right now.</p>
+        <button onclick="closePopup()">OK</button>
+        </div>'; 
     }
 }
 ?>
