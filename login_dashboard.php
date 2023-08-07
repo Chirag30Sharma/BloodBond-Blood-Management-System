@@ -89,7 +89,7 @@ if(mysqli_num_rows($result) > 0) {
             
             </div>
           </div>
-          <i class='bx bx-cart-alt cart'></i>
+          <i class="bx bx-user size"></i>
         </div>
         <div class="box">
           <div class="right-side">
@@ -100,7 +100,8 @@ if(mysqli_num_rows($result) > 0) {
              
             </div>
           </div>
-          <i class='bx bxs-cart-add cart two' ></i>
+          <i class="bx bx-female-sign size"></i>
+          <i class="bx bx-male-sign size" ></i>
         </div>
         <div class="box">
           <div class="right-side">
@@ -111,9 +112,9 @@ if(mysqli_num_rows($result) > 0) {
          
             </div>
           </div>
-          <i class='bx bx-cart cart three' ></i>
+          <i class="bx bxs-droplet size"></i>
         </div>
-        <div class="box">
+        <!-- <div class="box">
           <div class="right-side">
             <div class="box-topic">Action:</div>
             <div class="number">Donate</div>
@@ -123,7 +124,7 @@ if(mysqli_num_rows($result) > 0) {
             </div>
           </div>
           <i class='bx bxs-cart-download cart four' ></i>
-        </div>
+        </div> -->
       </div>
 
       <div class="sales-boxes">
@@ -174,11 +175,11 @@ if(mysqli_num_rows($result) > 0) {
          
           </ul>
           </div>
-          <div class="button">
+          <!-- <div class="button">
             <a href="#">See All</a>
-          </div>
+          </div> -->
         </div>
-        <div class="top-sales box">
+        <!-- <div class="top-sales box">
           <div class="title">Request for Donation</div>
          
               <div class="button">
@@ -188,7 +189,7 @@ if(mysqli_num_rows($result) > 0) {
          
               <div class="button">
                 <a href="#">Request</a>
-              </div>
+              </div> -->
           </li>
           </ul>
         </div>

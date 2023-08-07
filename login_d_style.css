@@ -271,6 +271,13 @@ nav .profile-details i{
   align-items: center;
   justify-content: space-between;
 }
+
+.home-content .sales-boxes {
+  display: flex;
+  justify-content: center; /* Add this to center the left box */
+  /* padding: 0 20px; */
+}
+
 .sales-boxes .box .title{
   font-size: 24px;
   font-weight: 500;
