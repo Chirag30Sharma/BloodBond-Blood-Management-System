@@ -442,3 +442,124 @@ nav .profile-details i{
     width: calc(100% - 60px);
   }
 }
+
+.size {
+  font-size: 1.5rem;  
+} 
+
+.size-large {
+  font-size: 2rem;
+}
+
+/* Adjust the spacing of the icons */
+.profile-details .admin_name {
+  margin-right: 5px;
+}
+
+/* Your existing CSS styles */
+
+/* Additional CSS for beautifying name, gender, and blood group */
+.home-section .overview-boxes .box-topic {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.home-section .overview-boxes .box .number {
+  font-size: 24px; /* Updated font size to make the name and gender larger */
+  font-weight: 500;
+  color: #333;
+  margin-top: -6px;
+}
+
+.home-section .overview-boxes .box .indicator {
+  display: flex;
+  align-items: center;
+}
+
+.home-section .overview-boxes .box .indicator i {
+  height: 24px; /* Updated height to make the icon larger */
+  width: 24px; /* Updated width to make the icon larger */
+  line-height: 24px; /* Updated line-height to vertically center the icon */
+  text-align: center;
+  border-radius: 50%;
+  font-size: 20px; /* Updated font size to make the icon larger */
+  margin-right: 5px;
+}
+
+.home-section .overview-boxes .box .indicator .text {
+  font-size: 14px;
+}
+
+/* Style the blood group icon with a red droplet */
+.home-section .overview-boxes .box .indicator .blood-group-icon {
+  color: #e05260;
+}
+
+/* Update the spacing of the profile details */
+nav .profile-details .admin_name {
+  font-size: 18px; /* Updated font size to make the profile name larger */
+  font-weight: 500;
+  color: #333;
+  margin: 0 10px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+nav .profile-details .admin_name .user-icon {
+  font-size: 24px; /* Updated font size to make the user icon larger */
+  margin-right: 5px;
+}
+
+/* Additional media queries for responsiveness */
+@media (max-width: 700px) {
+  .home-section .overview-boxes .box .indicator i {
+    font-size: 18px; /* Updated font size for responsiveness */
+    height: 20px; /* Updated height for responsiveness */
+    width: 20px; /* Updated width for responsiveness */
+    line-height: 20px; /* Updated line-height for responsiveness */
+  }
+
+  .home-section .overview-boxes .box .number {
+    font-size: 20px; /* Updated font size for responsiveness */
+  }
+
+  .home-section .overview-boxes .box-topic {
+    font-size: 16px; /* Updated font size for responsiveness */
+  }
+
+  nav .profile-details .admin_name {
+    font-size: 16px; /* Updated font size for responsiveness */
+  }
+
+  nav .profile-details .admin_name .user-icon {
+    font-size: 20px; /* Updated font size for responsiveness */
+  }
+}
+
+@media (max-width: 550px) {
+  .home-section .overview-boxes .box-topic {
+    font-size: 16px;
+  }
+
+  .home-section .overview-boxes .box .number {
+    font-size: 18px;
+  }
+
+  .home-section .overview-boxes .box .indicator i {
+    font-size: 18px; /* Updated font size for responsiveness */
+    height: 20px; /* Updated height for responsiveness */
+    width: 20px; /* Updated width for responsiveness */
+    line-height: 20px; /* Updated line-height for responsiveness */
+  }
+
+  nav .profile-details .admin_name {
+    font-size: 14px; /* Updated font size for responsiveness */
+  }
+
+  nav .profile-details .admin_name .user-icon {
+    font-size: 18px; /* Updated font size for responsiveness */
+  }
+}
