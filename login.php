@@ -121,6 +121,106 @@
       width: 20rem;
     }
   }
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 0.2s;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  
+  /*Let's make it appear when the page loads*/
+  .overlay:target:before {
+      display: none;
+  }
+  .overlay:before {
+    content:"";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    z-index: 9;
+  }
+  .overlay .popup {
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: fixed;
+    top: 0;
+    left: 35%;
+    padding: 25px;
+    margin: 70px auto;
+    z-index: 10;
+    -webkit-transition: all 0.6s ease-in-out;
+    -moz-transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in-out;
+  }
+  .overlay:target .popup {
+      top: -100%;
+      left: -100%;
+  }
+  
+  @media screen and (max-width: 768px){
+    .box{
+      width: 70%;
+    }
+    .overlay .popup{
+      width: 70%;
+      left: 15%;
+    }
+  }
+  .popup-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.popup-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.popup-box button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.popup-box button:hover {
+    background-color: #0056b3;
+}
+
 </style>
 
 <body>
@@ -156,7 +256,6 @@
   </form>
 
 <?php
-session_start(); // Start the session
 include("db.php");
 
 if (isset($_POST["log"])) {
@@ -174,12 +273,20 @@ if (isset($_POST["log"])) {
     header("Location: profile.php?email=$email");
     exit;
   } else {
-    echo "Invalid username or password";
+    echo '<div class="popup-box">
+    <p>Invalid username or password</p>
+    <button onclick="closePopup()">OK</button>
+    </div>';
   }
 }
 
 ?>
-
+    <script>
+        function closePopup() {
+            var popupBox = document.querySelector('.popup-box');
+            popupBox.style.display = 'none';
+        }
+    </script>
 
 </body>
 
