@@ -1,3 +1,34 @@
+<?php
+  include("db.php");
+  session_start(); // Start the session
+
+  if (isset($_POST["log"])) {
+    $email = $_POST["email"];
+    $pswrd = $_POST["pswrd"];
+
+    // Use prepared statements to prevent SQL injection
+    $sql = "SELECT * FROM login WHERE email = ? AND password = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $email, $pswrd);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) == 1) {
+      session_regenerate_id();
+      $_SESSION['loggedin'] = true;
+      $_SESSION["email"] = $email;
+
+      header("Location: profile.php");
+      exit;
+    } else {
+      echo '<div class="popup-box">
+      <p>Invalid username or password</p>
+      <button onclick="closePopup()">OK</button>
+      </div>';
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -255,39 +286,11 @@
     </div>
   </form>
 
-<?php
-include("db.php");
-
-if (isset($_POST["log"])) {
-  $email = $_POST["email"];
-  $pswrd = $_POST["pswrd"];
-
-  $sql = "SELECT * FROM login WHERE email = '$email' AND password = '$pswrd'";
-  $result = mysqli_query($conn, $sql);
-
-  if (mysqli_num_rows($result) == 1) {
-    session_regenerate_id();
-		$_SESSION['loggedin'] = TRUE;
-    $_SESSION["email"] = $email;
-
-    header("Location: profile.php?email=$email");
-    exit;
-  } else {
-    echo '<div class="popup-box">
-    <p>Invalid username or password</p>
-    <button onclick="closePopup()">OK</button>
-    </div>';
-  }
-}
-
-?>
-    <script>
-        function closePopup() {
-            var popupBox = document.querySelector('.popup-box');
-            popupBox.style.display = 'none';
-        }
-    </script>
-
+  <script>
+    function closePopup() {
+      var popupBox = document.querySelector('.popup-box');
+      popupBox.style.display = 'none';
+    }
+  </script>
 </body>
-
 </html>
