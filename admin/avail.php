@@ -231,14 +231,15 @@ if ($result->num_rows > 0) {
                 <form method="post" action="avail.php?email=<?php echo $email;?>" >
                     <label for="hospital_name"><b>Hospital Name : </b></label>
                     <?php echo $name;?><br><br>
-                    <label for="sufsup"><b>Available Blood Group : </b></label>
+                    <label for="bg"><b>Available Blood Group : </b></label>
                     <select id="sufsup" name="sufsup">
                         <?php foreach ($bloodGroups as $bloodGroup => $count) : ?>
                             <?php if ($count >= 55) : ?>
-                                <option value="<?php echo $labelName . ':' . $bloodGroupColumnMapping[$labelName]; ?>"><?php echo $labelName; ?></option>
+                                <option value="<?php echo $bloodGroup; ?>" data-column-name="<?php echo $bloodGroupColumnMapping[$bloodGroup]; ?>"><?php echo $bloodGroup; ?></option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select><br><br>
+
                     <label for="hospital_add"><b>Hospital Address : </b></label>
                     <?php echo isset($orgDetails['org_add']) ? $orgDetails['org_add'] : 'N/A'; ?><br><br>
                     <label for="hospital_no"><b>Contact Info : </b></label>
@@ -250,13 +251,7 @@ if ($result->num_rows > 0) {
             </div>
         </div>
 
-        <!-- Popup message -->
-        <div id="popup" class="popup">
-            <div class="popup-message">
-                Blood group availability updated successfully!
-            </div>
-        </div>
-
+    
         <script>
             function showPopup() {
                 // Show the popup message
@@ -266,6 +261,12 @@ if ($result->num_rows > 0) {
                 setTimeout(function() {
                     document.getElementById("popup").style.display = "none";
                 }, 3000);
+            }
+        </script>
+        <script>
+            function closePopup() {
+                var popupBox = document.querySelector('.popup-box');
+                popupBox.style.display = 'none';
             }
         </script>
 </body>
@@ -281,13 +282,23 @@ $bloodGroupColumnMapping = array(
     'AB+' => 'ab_pos',
     'AB-' => 'ab_neg'
 );
+
+// Define $bloodGroupColumnMapping array here or include it from the appropriate file
+
 if (isset($_POST["upd"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selectedOption = $_POST["sufsup"];
-        list($selectedLabelName, $selectedColumnName) = explode(':', $selectedOption);
-        $stmt = $conn->prepare("UPDATE Blood_Stock SET $selectedColumnName = ? WHERE org_email = ?");
+        $selectedLabelName = $selectedOption;
+        $selectedColumnName = $_POST['sufsup']; // Retrieve the column name from the data attribute
+
+        // Define your database connection here, assuming $conn is your connection object
+
+        $sql = "UPDATE Blood_Stock SET sufsup = ? WHERE org_email = ?";
+        
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $selectedLabelName, $email);
         $result = $stmt->execute();
+
         if ($result) {
             echo '<div class="popup-box">
                         <p>Blood group availability updated successfully!</p>
@@ -295,11 +306,13 @@ if (isset($_POST["upd"])) {
                     </div>';
         } else {
             echo '<div class="popup-box">
-                        <p>"Error updating blood group availability: " . $conn->error</p>
+                        <p>Error updating blood group availability: ' . $conn->error . '</p>
                         <button onclick="closePopup()">OK</button>
                     </div>';
         }
     }
 }
 ?>
+
+
 
