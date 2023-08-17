@@ -205,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         <a href="blood.php" class="btn btn-outline-light py-md-3 px-md-5">Manage Blood Stock</a>
                         <a href="bloodcamp.php" class="btn btn-outline-light py-md-3 px-md-5">Create Blood Camp</a>
+                        <a href="seeking.php" class="btn btn-outline-light py-md-3 px-md-5">Seeker List</a>
                     
                          <!-- Popup for Security Pin -->
                         

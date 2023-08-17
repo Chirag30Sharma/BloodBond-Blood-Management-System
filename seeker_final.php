@@ -1,9 +1,17 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php');
 	exit;
-}?>
+}
+include("db.php");
+include("navbar.php");
+
+$query = "SELECT DISTINCT location FROM bloodcamp";
+$result = mysqli_query($conn, $query);
+
+?>
 
 
 <!DOCTYPE html>
@@ -120,24 +128,6 @@ if (!isset($_SESSION['loggedin'])) {
     <body>
         <!-- Navbar & Carousel Start -->
         <div class="container-fluid position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-                <a href="indexphp" class="navbar-brand p-0">
-                    <h1 class="m-0">BLOODBOND</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="index.php" class="nav-item nav-link">Home</a>
-                        <a href="livebloodcampphp" class="nav-item nav-link">Live Blood Camps</a>
-                        <a href="donor.php" class="nav-item nav-link">Donor Registration</a>
-                        <a href="guidelinesphp" class="nav-item nav-link">Guidelines</a>
-                        <a href="login.php" class="nav-item nav-link">Login</a>
-                    </div>
-                </div>
-            </nav>
-
             <form action="seeker_final.php" method = "POST">
             <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -147,26 +137,33 @@ if (!isset($_SESSION['loggedin'])) {
                             <!--<div class="p-3" style="max-width: 900px;">-->
                                 <!-- <h1 style="color: white; font-size: 70px;">Lets unite to Save Lives !</h1> -->
                                 <div class="search_select_box">
-                                    <select id="address" name="address" style="width: 400px; height: 40px;" data-live-search = "true">
-                                        <option disabled selected hidden>Choose Location</option>
-                                        <option>Ghatkopar</option>
-                                        <option>Kurla</option>
-                                        <option>Andheri</option>
-                                        <option>Vile Parle</option>
-                                        <option>Bandra</option>
+                                        <select id="address" name="address" style="width: 400px; height: 40px;" data-live-search = "true">
+                                        <option value="" disabled selected hidden>Choose Location</option>
+                                        <?php
+                                        // Fetch all unique locations from the database
+
+                                        if (mysqli_num_rows($result) > 0) {
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                $location = $row['location'];
+                                                echo '<option value="' . $location . '">' . $location . '</option>';
+                                            }
+                                        } else {
+                                            echo '<option disabled>No locations available</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="search_select_box">
                                     <select id="blood_group" name="blood_group" style="width: 400px; height: 40px;" data-live-search = "true">
                                         <option disabled selected hidden>Choose Blood Group</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
+                                        <option value="a_pos">A+</option>
+                                        <option value="a_neg">A-</option>
+                                        <option value="b_pos">B+</option>
+                                        <option value="b_neg">B-</option>
+                                        <option value="ab_pos">AB+</option>
+                                        <option value="ab_neg">AB-</option>
+                                        <option value="o_pos">O+</option>
+                                        <option value="o_neg">O-</option>
                                     </select>
                                 </div>
                                 
@@ -176,7 +173,6 @@ if (!isset($_SESSION['loggedin'])) {
                     </div>
                 </div>
             </div>
-            
         </div>
 </form>
 
@@ -188,81 +184,84 @@ if (!isset($_SESSION['loggedin'])) {
 
         <!-- Navbar & Carousel End -->
 
-    <?php 
-    include('db.php'); 
-    if(isset($_POST['submit'])) {
-
-        $blood_group = $_POST['blood_group'];
-        $address = $_POST['address'];
-        $query = "SELECT org_email,sufsup FROM Blood_Stock WHERE sufsup = '$blood_group'";
-        $result = mysqli_query($conn, $query);
-
-        if(mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-                $email = $row['org_email'];
-                $sufsup = $row['sufsup'];
-        }
+        <?php 
+        if(isset($_POST['submit'])) {
+            $blood_group = $_POST['blood_group'];
+            $address = $_POST['address'];
             
-        }
-        else{
-            echo '<div class="popup-box">
-                        <p>Error fetching details</p>
-                        <button onclick="closePopup()">OK</button>
-                    </div>';
-        }
+            $query = "SELECT * FROM Blood_Stock";
+            $result = mysqli_query($conn, $query);
+            
+            // Initialize variables
+            $org_name = "";
+            $org_add = "";
+            $email = "";
+            $org_no = "";
+            $website_url = "";
 
+            if(mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)) {
+                    $email = $row['org_email'];
+                    $a_pos = $row['a_pos'];
+                    $a_neg = $row['a_neg'];
+                    $b_pos = $row['b_pos'];
+                    $b_neg = $row['b_neg'];
+                    $o_pos = $row['o_pos'];
+                    $o_neg = $row['o_neg'];
+                    $ab_pos = $row['ab_pos'];
+                    $ab_neg = $row['ab_neg'];
+                    $sufsup = $row['sufsup'];
+                }
+            }
+            else {
+                echo '<div class="popup-box">
+                          <p>Error fetching details</p>
+                          <button onclick="closePopup()">OK</button>
+                      </div>';
+            }
 
-        $stmt = $conn->prepare("SELECT org_name, org_add, org_no, website_url FROM admin_registration WHERE org_email = ?");
-        $stmt->bind_param("s", $email);
+            $stmt = $conn->prepare("SELECT org_name, org_add, org_no, website_url FROM admin_registration WHERE org_email = ?");
+            $stmt->bind_param("s", $email);
+            
+            if (!$stmt->execute()) {
+                die("Error executing the query: " . $stmt->error);
+            }
 
-        
-        if (!$stmt->execute()) {
-            die("Error executing the query: " . $stmt->error);
-        }
+            $result = $stmt->get_result();
 
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
                     $org_name = $row['org_name'];
                     $org_add = $row['org_add'];
                     $org_no = $row['org_no'];
                     $website_url = $row['website_url'];
-                
+                }
+            } else {
+                echo '<div class="popup-box">
+                          <p>No booking details found for the organization: ' . $org_name . '</p>
+                          <button onclick="closePopup()">OK</button>
+                      </div>';
             }
-        } else {
-            
-            echo '<div class="popup-box">
-                        <p>No booking details found for the organization: $name</p>
-                        <button onclick="closePopup()">OK</button>
-                    </div>';
-    }
+
+            // Display organization details
+            echo '<div class="card">';
+            echo '<h2>'. $org_name.'</h2>';
+            echo '<h5> Contact Details </h5>';
+            echo '<p><span>Address : </span>'. $org_add.'</p>';
+            echo '<p><span>Blood Group Available : </span>'. $blood_group.'</p>';
+            echo '<p><span>Email : </span>'. $email.'</p>';
+            echo '<p><span>Contact Info : </span>'. $org_no.'</p>';
+            echo '<p><span>Website URL : </span>'. $website_url.'</p>';
+            $urlParams = http_build_query(array(
+                'org_name' => $org_name,
+                'blood_group' => $blood_group,
+                'org_email' => $email
+            ));
+            echo '<p><span><a href="seeker.php?' . $urlParams . '">Seek</a></span></p>';
+            echo '</div>';
         }
 
-
-        echo '<div class="card">';
-        echo '<h2>'. $org_name.'</h2>';
-        echo '<h5> Contact Details </h5>';
-        echo '<p><span>Address : </span>'. $org_add.'</p>';
-        echo '<p><span>Email : </span>'. $email.'</p>';
-        echo '<p><span>Contact Info : </span>'. $org_no.'</p>';
-        echo '<p><span>Website URL : </span>'. $website_url.'</p>';
-        echo '<button type="sub" class="btn" name="upd">Seek</button>';
-        echo '</div>';
-        
-        // if(isset($_POST["upd"])){
-        //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        //         $sufsup = $_POST["sufsup"];
-        //         $stmt = $conn->prepare("UPDATE Blood_Stock SET sufsup = ? WHERE org_email = ?");
-        //         $stmt->bind_param("ss", $sufsup, $email);
-        //         $result = $stmt->execute();
-        //     }
-        // }
-    
-
-    
-    ?>
+        ?>
 
     </body>
 </html>
