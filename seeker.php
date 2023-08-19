@@ -50,6 +50,9 @@ if (isset($_GET['org_name'], $_GET['blood_group'], $_GET['org_email'])) {
                             }
                         ?>
                     <form method="post" id="bookingForm">
+                        <label>Enter Any Government ID as proof</label><br>
+                        <input type="text" name="gid" placeholder = "Any Government ID" required><br><br>
+
                         <input type="submit" class="btn btn-primary" name="confirm_booking" value="Confirm Booking">
                     </form>
                     </div>
@@ -69,9 +72,10 @@ if (isset($_GET['org_name'], $_GET['blood_group'], $_GET['org_email'])) {
 <?php
 $user_email = $_SESSION['email'];
 if(isset($_POST['confirm_booking'])){
-    $sql2 = "INSERT INTO seeker (org_name, user_email, blood_group) VALUES (?, ?, ?)";
+    $gid = $_POST['gid'];
+    $sql2 = "INSERT INTO seeker (org_name, user_email, blood_group,government_id) VALUES (?, ?, ?, ?)";
     $stmt2 = mysqli_prepare($conn, $sql2);
-    mysqli_stmt_bind_param($stmt2, "sss", $org_name, $user_email, $blood_group);
+    mysqli_stmt_bind_param($stmt2, "ssss", $org_name, $user_email, $blood_group,$gid);
     $result2 = mysqli_stmt_execute($stmt2);
 
     if ($result2) {
@@ -83,11 +87,8 @@ if(isset($_POST['confirm_booking'])){
         $subject = "Blood Donation Booking Details";
         $body = "<p>Hello $name,</p>
                 <p>Thank you for seeking the blood from us.</p>
-                <p>Please bring your original government ID along with you.</p>
-                <h4>Booking Details:</h4>
+                <p>Please bring your original government ID along with you: $gid</p>
                 <p><strong>Organization Name:</strong> $org_name</p>
-                <p><strong>Date:</strong> $date</p>
-                <p><strong>Address:</strong> $address</p>
                 <p>Thank you for your support!</p>
                 <p>Best regards,<br>The Blood Donation Team</p>";
 

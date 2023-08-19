@@ -15,14 +15,14 @@ $result = mysqli_query($conn, $sql);
 
 if ($result && mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_assoc($result);
-    $name = $row['org_name'];
+    $org_name = $row['org_name'];
 } else {
     echo "Organization not found!";
     exit;
 }
 
-$stmt = $conn->prepare("SELECT date, address, user_email, user_name FROM donate WHERE org_name = ?");
-$stmt->bind_param("s", $name);
+$stmt = $conn->prepare("SELECT user_email, blood_group, government_id FROM seeker WHERE org_name = ?");
+$stmt->bind_param("s", $org_name);
 
 // Execute the query and check for errors
 if (!$stmt->execute()) {
@@ -38,14 +38,13 @@ $bookingDetails = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $bookingDetails[] = array(
-            'date' => $row['date'],
-            'address' => $row['address'],
             'user_email' => $row['user_email'],
-            'user_name' => $row['user_name']
+            'blood_group' => $row['blood_group'],
+            'government_id' => $row['government_id'],
         );
     }
 } else {
-    echo "No booking details found for the organization: $name";
+    echo "No booking details found for the organization: $org_name";
 }
 
 
@@ -55,7 +54,7 @@ $userDetails = array();
 foreach ($bookingDetails as $booking) {
     $user_email = $booking['user_email'];
 
-    $stmt = $conn->prepare("SELECT dob, mobileno, gender, bloodgroup, locality FROM login WHERE email = ?");
+    $stmt = $conn->prepare("SELECT name, dob, mobileno, gender, locality FROM login WHERE email = ?");
     $stmt->bind_param("s", $user_email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -63,10 +62,10 @@ foreach ($bookingDetails as $booking) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $userDetails[$user_email] = array(
+            'name' => $row['name'],
             'dob' => $row['dob'],
             'mobileno' => $row['mobileno'],
             'gender' => $row['gender'],
-            'bloodgroup' => $row['bloodgroup'],
             'locality' => $row['locality']
         );
     }
@@ -188,29 +187,30 @@ foreach ($bookingDetails as $booking) {
             // Display booking information in cards
             foreach ($bookingDetails as $booking) {
                 $user_email = $booking['user_email'];
-                $user_name = $booking['user_name'];
+                $blood_group = $booking['blood_group'];
+                $government_id = $booking['government_id'];
 
                 echo '<div class="card">';
-                echo "<h2>{$name}</h2>";
+                echo "<h2>{$org_name}</h2>";
                 echo '<h3>Person Details</h3>';
-                echo "<p><strong>Name:</strong> {$user_name}</p>";
-                echo "<p><strong>Email:</strong> {$user_email}</p>";
+
 
                 // Check if user details are available for this booking
                 if (isset($userDetails[$user_email])) {
                     $userDetail = $userDetails[$user_email];
+                    echo "<p><strong>Name:</strong> {$userDetail['name']}</p>";
+                    echo "<p><strong>Email:</strong> {$user_email}</p>";
                     echo "<p><strong>Date of Birth:</strong> {$userDetail['dob']}</p>";
                     echo "<p><strong>Phone:</strong> {$userDetail['mobileno']}</p>";
-                    echo "<p><strong>Blood Group:</strong> {$userDetail['bloodgroup']}</p>";
                     echo "<p><strong>Gender:</strong> {$userDetail['gender']}</p>";
-                    echo "<p><strong>Locality:</strong> {$userDetail['locality']}</p>";
+                    echo "<p><strong>Locality:</strong> {$userDetail['locality']}</p><br><br>";
                 } else {
                     echo '<p><strong>User details not found.</strong></p>';
                 }
 
-                echo '<h3>Event Details</h3>';
-                echo "<p><strong>Date:</strong> {$booking['date']}</p>";
-                echo "<p><strong>Address:</strong> {$booking['address']}</p>";
+                echo "<p><strong>User ID:</strong> {$booking['user_email']}</p>";
+                echo "<p><strong>Required Blood Group:</strong> {$booking['blood_group']}</p>";
+                echo "<p><strong>Government ID Number:</strong> {$booking['government_id']}</p>";
                 echo '</div>';
             }
             ?>
