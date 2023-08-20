@@ -231,7 +231,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team11.jpeg" alt="">
+                            <img class="img-fluid w-100" src="img/IMG-20230502-WA0010.jpg" alt="">
                         </div>
                         <div class="text-center py-4">
                             <h4 class="text-primary">Vidhi Shah</h4>
@@ -241,7 +241,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team1111.jpeg" alt="">
+                            <img class="img-fluid w-100" src="img/IMG-20220217-WA0048.jpg" alt="">
                             
                         </div>
                         <div class="text-center py-4">
@@ -252,7 +252,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/man.jpeg" alt="">
+                            <img class="img-fluid w-100" src="img/Screenshot 2023-03-11 125257.png" alt="">
                            
                         </div>
                         <div class="text-center py-4">
@@ -286,7 +286,7 @@ if (isset($_SESSION['loggedin'])) {
                                 <small><i class="far fa-calendar-alt text-primary me-2"></i>05 Mar, 2023</small>
                             </div>
                             <h4 class="mb-3">The Connection Between Blood Donation and Iron Deficiency: Tips for Maintaining Healthy Iron Levels.</h4>
-                            <a class="text-uppercase" href="">Read More <i class="bi bi-arrow-right"></i></a>
+                            <a class="text-uppercase" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9749410/">Read More <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -302,7 +302,7 @@ if (isset($_SESSION['loggedin'])) {
                                 <small><i class="far fa-calendar-alt text-primary me-2"></i>15 Mar, 2023</small>
                             </div>
                             <h4 class="mb-3">Donating Blood During a Pandemic: Is it Safe?</h4>
-                            <a class="text-uppercase" href="">Read More <i class="bi bi-arrow-right"></i></a>
+                            <a class="text-uppercase" href="https://www.relainstitute.com/blog/is-it-still-safe-to-donate-blood-during-the-coronavirus-pandemic/">Read More <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
