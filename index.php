@@ -477,6 +477,16 @@ if (isset($_SESSION['loggedin'])) {
             popupBox.style.display = 'none';
         }
     </script>
+    <script>
+        window.chatbaseConfig = {
+            chatbotId: "vIXA4wCbpmLwK9y9Y3A0z",
+        }
+        </script>
+        <script
+        src="https://www.chatbase.co/embed.min.js"
+        id="vIXA4wCbpmLwK9y9Y3A0z"
+        defer>
+    </script>
 </body>
 
 </html>
