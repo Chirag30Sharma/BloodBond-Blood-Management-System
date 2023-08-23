@@ -1,4 +1,6 @@
 <?php
+include("db.php");
+
 require 'vendor/autoload.php';
 
 function Subscription($subject,$body,$receipent)
@@ -10,12 +12,12 @@ function Subscription($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
 
         $mail->isHTML(true);                                  
@@ -38,12 +40,12 @@ function registering($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username  = $MY_EMAIL;                   
+        $mail->Password  = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
 
         $mail->isHTML(true);                                  
@@ -67,12 +69,12 @@ function forgot($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
 
         $mail->isHTML(true);                                  
@@ -96,13 +98,13 @@ function contact($subject,$body)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
-        $mail->addAddress('bloodbond37@gmail.com');   
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
+        $mail->addAddress($MY_EMAIL);   
 
         $mail->isHTML(true);                                  
         $mail->Subject = $subject;
@@ -125,14 +127,14 @@ function donate($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
-        $mail->addAddress('bloodbond37@gmail.com');   
+        $mail->addAddress($MY_EMAIL);   
 
         $mail->isHTML(true);                                  
         $mail->Subject = $subject;
@@ -155,14 +157,14 @@ function plate($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
-        $mail->addAddress('bloodbond37@gmail.com');   
+        $mail->addAddress($MY_EMAIL);   
 
         $mail->isHTML(true);                                  
         $mail->Subject = $subject;
@@ -185,14 +187,14 @@ function seek($subject,$body,$receipent)
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'bloodbond37@gmail.com';                   
-        $mail->Password   = 'ebqnsejofsrraxod';                              
+        $mail->Username   = $MY_EMAIL;                   
+        $mail->Password   = $MY_PASS;                              
         $mail->SMTPSecure = 'tls';          
         $mail->Port       = 587;                                    
 
-        $mail->setFrom('bloodbond37@gmail.com', 'BloodBond');
+        $mail->setFrom($MY_EMAIL, 'BloodBond');
         $mail->addAddress($receipent);   
-        $mail->addAddress('bloodbond37@gmail.com');   
+        $mail->addAddress($MY_EMAIL);   
 
         $mail->isHTML(true);                                  
         $mail->Subject = $subject;

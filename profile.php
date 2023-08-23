@@ -487,12 +487,9 @@ if ($result && mysqli_num_rows($result) == 1) {
         window.chatbaseConfig = {
             chatbotId: "vIXA4wCbpmLwK9y9Y3A0z",
         }
-        </script>
-        <script
-        src="https://www.chatbase.co/embed.min.js"
-        id="vIXA4wCbpmLwK9y9Y3A0z"
-        defer>
     </script>
+    <script src="<?php echo $CHATBOT_SRC; ?>" id="<?php echo $CHATBOT_ID; ?>" defer></script>
+
 </body>
 
 </html>

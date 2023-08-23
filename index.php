@@ -479,14 +479,11 @@ if (isset($_SESSION['loggedin'])) {
     </script>
     <script>
         window.chatbaseConfig = {
-            chatbotId: "vIXA4wCbpmLwK9y9Y3A0z",
+            chatbotId: $CHATBOT_ID,
         }
         </script>
-        <script
-        src="https://www.chatbase.co/embed.min.js"
-        id="vIXA4wCbpmLwK9y9Y3A0z"
-        defer>
-    </script>
+    <script src="<?php echo $CHATBOT_SRC; ?>" id="<?php echo $CHATBOT_ID; ?>" defer></script>
+
 </body>
 
 </html>
