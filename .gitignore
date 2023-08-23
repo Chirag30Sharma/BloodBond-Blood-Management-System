@@ -3,3 +3,6 @@
 
 ./admin/inc/db.php
 /admin/inc/db.php
+
+./mail.php
+/mail.php
