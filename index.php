@@ -223,46 +223,56 @@ if (isset($_SESSION['loggedin'])) {
 
     <!-- Team Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h1 class="fw-bold text-primary text-uppercase">Featured Donors</h1>
-            </div>
-            <div class="row g-5">
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/IMG-20230502-WA0010.jpg" alt="">
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Vidhi Shah</h4>
-                        </div>
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h1 class="fw-bold text-primary text-uppercase">Featured Donors</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
+                <div class="team-item bg-light rounded overflow-hidden">
+                    <div class="team-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="img/IMG-20230502-WA0010.jpg" alt="">
                     </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/IMG-20220217-WA0048.jpg" alt="">
-                            
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Vedantika Singh</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/Screenshot 2023-03-11 125257.png" alt="">
-                           
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Kevin Tank</h4>
-                        </div>
+                    <div class="text-center py-4">
+                        <h4 class="text-primary">Vidhi Shah</h4>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 wow slideInUp" data-wow-delay="1.2s">
+                <div class="team-item bg-light rounded overflow-hidden">
+                    <div class="team-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="img/PHOTO1-2023-08-20-16-14-18.jpg" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <h4 class="text-primary">Chirag Sharma</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 wow slideInUp" data-wow-delay="0.6s">
+                <div class="team-item bg-light rounded overflow-hidden">
+                    <div class="team-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="img/IMG-20220217-WA0048.jpg" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <h4 class="text-primary">Vedantika Singh</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 wow slideInUp" data-wow-delay="0.9s">
+                <div class="team-item bg-light rounded overflow-hidden">
+                    <div class="team-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="img/Screenshot 2023-03-11 125257.png" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <h4 class="text-primary">Kevin Tank</h4>
+                    </div>
+                </div>
+            </div>
+           
         </div>
     </div>
+</div>
+
     <!-- Team End -->
 
 
