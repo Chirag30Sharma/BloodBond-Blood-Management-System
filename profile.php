@@ -485,10 +485,23 @@ if ($result && mysqli_num_rows($result) == 1) {
     </script>
     <script>
         window.chatbaseConfig = {
-            chatbotId: "vIXA4wCbpmLwK9y9Y3A0z",
+            chatbotId: $CHATBOT_ID,
+        }
+        </script>
+    <script src="<?php echo $CHATBOT_SRC; ?>" id="<?php echo $CHATBOT_ID; ?>" defer></script>
+
+    <script>
+        window.embeddedChatbotConfig = {
+        chatbotId: $CHATBOT_ID,
+        domain: $CHATBOT_DOMAIN
         }
     </script>
-    <script src="<?php echo $CHATBOT_SRC; ?>" id="<?php echo $CHATBOT_ID; ?>" defer></script>
+    <script
+        src= $CHATBOT_SRC
+        chatbotId= $CHATBOT_ID
+        domain=$CHATBOT_DOMAIN
+        defer>
+    </script>
 
 </body>
 

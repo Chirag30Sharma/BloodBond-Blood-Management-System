@@ -494,6 +494,19 @@ if (isset($_SESSION['loggedin'])) {
         </script>
     <script src="<?php echo $CHATBOT_SRC; ?>" id="<?php echo $CHATBOT_ID; ?>" defer></script>
 
+    <script>
+        window.embeddedChatbotConfig = {
+        chatbotId: $CHATBOT_ID,
+        domain: $CHATBOT_DOMAIN
+        }
+    </script>
+    <script
+        src= $CHATBOT_SRC
+        chatbotId= $CHATBOT_ID
+        domain=$CHATBOT_DOMAIN
+        defer>
+    </script>
+
 </body>
 
 </html>
