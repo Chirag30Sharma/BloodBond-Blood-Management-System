@@ -13,7 +13,25 @@ if (isset($_GET['org_name'], $_GET['blood_group'], $_GET['org_email'])) {
     $org_name = $_GET['org_name'];
     $blood_group = $_GET['blood_group'];
     $email = $_GET['org_email'];
+
+    $blood_group_names = [
+        'o_pos' => 'O+',
+        'o_neg' => 'O-',
+        'a_pos' => 'A+',
+        'a_neg' => 'A-',
+        'b_pos' => 'B+',
+        'b_neg' => 'B-',
+        'ab_pos' => 'AB+',
+        'ab_neg' => 'AB-',
+
+    ];
+    if (array_key_exists($blood_group, $blood_group_names)) {
+        $display_name = $blood_group_names[$blood_group];
+    } else {
+        $display_name = $blood_group;
+    }
 }
+
 
 ?>
 
@@ -38,7 +56,7 @@ if (isset($_GET['org_name'], $_GET['blood_group'], $_GET['org_email'])) {
                     </div>
                     <div class="card-body">
                         <p><strong>Organization Name:</strong> <?php echo $org_name; ?></p>
-                        <p><strong>Blood Group:</strong> <?php echo $blood_group; ?></p>
+                        <p><strong>Blood Group:</strong> <?php echo $display_name; ?></p>
                         <?php
                             $sql = "SELECT iframe FROM bloodcamp WHERE org_name = '$org_name'";
                             $result = mysqli_query($conn, $sql);
